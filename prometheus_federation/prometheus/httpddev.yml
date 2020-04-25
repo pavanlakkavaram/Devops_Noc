@@ -1,0 +1,88 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: http-monitoring
+    type: frontend
+  name: http-monitoring
+  namespace: monitoring
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: http-monitoring
+      type: frontend
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: "9117"
+        prometheus.io/scrape: "true"
+      labels:
+        app: http-monitoring
+        type: frontend
+        environment: dev
+        cluster: dev
+    spec:
+      containers:
+      - name: apache
+        image: docker.io/bitnami/apache:2.4.43-debian-10-r10
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 8443
+          name: https
+          protocol: TCP
+      - command:
+        - /bin/apache_exporter
+        - --scrape_uri
+        - http://status.localhost:8080/server-status/?auto
+        image: docker.io/bitnami/apache-exporter:0.8.0-debian-10-r4
+        imagePullPolicy: IfNotPresent
+        name: metrics
+        ports:
+        - containerPort: 9117
+          name: metrics
+          protocol: TCP
+      dnsPolicy: ClusterFirst
+      hostAliases:
+      - hostnames:
+        - status.localhost
+        ip: 127.0.0.1
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: http-monitoring
+    type: frontend
+  name: http-monitoring
+  namespace: monitoring
+spec:
+  externalTrafficPolicy: Cluster
+  ports:
+  - name: http
+    nodePort: 30690
+    port: 80
+    protocol: TCP
+    targetPort: http
+  - name: https
+    nodePort: 31593
+    port: 443
+    protocol: TCP
+    targetPort: https
+  selector:
+    app: http-monitoring
+    type: frontend
+  sessionAffinity: None
+  type: LoadBalancer
+status:
+  loadBalancer: {}

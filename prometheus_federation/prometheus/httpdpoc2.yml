@@ -25,6 +25,8 @@ spec:
       labels:
         app: http-monitoring
         type: frontend
+        environment: poc2
+        cluster: poc2
     spec:
       containers:
       - name: apache

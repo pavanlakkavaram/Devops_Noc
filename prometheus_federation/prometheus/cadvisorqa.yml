@@ -11,8 +11,12 @@ spec:
       name: cadvisor
   template:
     metadata:
+      annotations:
+        prometheus.io/scrape: "true"
       labels:
         name: cadvisor
+        environment: qa
+        cluster: qa
     spec:
       tolerations:
       - key: node-role.kubernetes.io/master

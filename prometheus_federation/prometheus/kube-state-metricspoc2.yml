@@ -33,6 +33,8 @@ spec:
       name: kube-state-metrics-main
       labels:
         app: kube-state-metrics
+        environment: poc2
+        cluster: poc2
     spec:
       containers:
         - name: kube-state-metrics
