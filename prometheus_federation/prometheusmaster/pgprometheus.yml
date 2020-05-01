@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pgprometheus
+  labels:
+    app: pgprometheus
+  namespace: monitoring
+  annotations:
+    monitoring: "true"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pgprometheus
+  template:
+    metadata:
+      labels:
+        app: pgprometheus
+    spec:
+      containers:
+      - image: timescale/pg_prometheus:0.2.2-pg11
+        name: pgprometheus
+        env:
+          - name: POSTGRES_PASSWORD
+            value: secret
+        ports:
+        - containerPort: 5432
+        resources:
+          limits:
+            memory: "2Gi"
+            cpu: "1000m"
+          requests: 
+            memory: "1Gi"
+            cpu: "500m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: pgprometheus
+  name: pgprometheus
+  namespace: monitoring
+spec:
+  ports:
+  - nodePort: 30500
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+  selector:
+    app: pgprometheus
+  type: NodePort
+

@@ -1,7 +1,7 @@
 apiVersion: extensions/v1beta1 # for versions before 1.8.0 use extensions/v1beta1 [apps/v1beta2]
 kind: DaemonSet
 metadata:
-  name: cadvisor1
+  name: cadvisor
   namespace: monitoring
   labels:
     k8s-app: cadvisor-logging
@@ -15,8 +15,8 @@ spec:
         prometheus.io/scrape: "true"
       labels:
         name: cadvisor
-        environment: poc2
-        cluster: qa
+        environment: dev
+        cluster: dev
     spec:
       tolerations:
       - key: node-role.kubernetes.io/master

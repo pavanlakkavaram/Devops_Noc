@@ -17,9 +17,9 @@ data:
         metrics_path: '/federate'
         params:
           'match[]':
-            - '{job=~"kubernetes-pods|kubernetes-service-endpoints|kubernetes-cadvisor"}'
+            - '{job=~"apache-exporter|kube-state-metrics|kubernetes-cadvisor"}'
             - '{__name__=~"job:.*"}'
         static_configs:
           - targets:
-            - '34.71.230.43:9090'
-            - '35.239.168.167:9090'
+            - '10.128.0.26:31587'
+            - '10.128.0.25:31417'

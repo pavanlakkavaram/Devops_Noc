@@ -4,7 +4,7 @@ metadata:
   labels:
     app: http-monitoring
     type: frontend
-  name: http-monitoring1
+  name: http-monitoring
   namespace: monitoring
 spec:
   replicas: 1
@@ -25,7 +25,7 @@ spec:
       labels:
         app: http-monitoring
         type: frontend
-        environment: poc2
+        environment: qa
         cluster: qa
     spec:
       containers:

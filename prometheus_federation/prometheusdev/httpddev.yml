@@ -4,10 +4,10 @@ metadata:
   labels:
     app: http-monitoring
     type: frontend
-  name: http-monitoring1
+  name: http-monitoring
   namespace: monitoring
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: http-monitoring
@@ -25,8 +25,8 @@ spec:
       labels:
         app: http-monitoring
         type: frontend
-        environment: poc2
-        cluster: qa
+        environment: dev
+        cluster: dev
     spec:
       containers:
       - name: apache
