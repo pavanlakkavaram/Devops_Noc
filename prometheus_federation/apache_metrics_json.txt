@@ -16,8 +16,8 @@
   "editable": true,
   "gnetId": 9069,
   "graphTooltip": 0,
-  "id": 32,
-  "iteration": 1588052991281,
+  "id": 11,
+  "iteration": 1588335388017,
   "links": [],
   "panels": [
     {
@@ -689,8 +689,9 @@
       {
         "allValue": null,
         "current": {
-          "text": "dev",
-          "value": "dev"
+          "selected": true,
+          "text": "qa",
+          "value": "qa"
         },
         "datasource": "prometheus",
         "definition": "",
@@ -701,7 +702,7 @@
         "multi": false,
         "name": "cluster",
         "options": [],
-        "query": "label_values(cluster)",
+        "query": "label_values(apache_up, cluster)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -713,10 +714,11 @@
         "useTags": false
       },
       {
-        "allValue": null,
+        "allValue": "null",
         "current": {
-          "text": "dev",
-          "value": "dev"
+          "selected": true,
+          "text": "qa",
+          "value": "qa"
         },
         "datasource": "prometheus",
         "definition": "",
@@ -727,7 +729,7 @@
         "multi": false,
         "name": "environment",
         "options": [],
-        "query": "label_values(environment)",
+        "query": "label_values(apache_up{cluster=\"$cluster\"}, environment)",
         "refresh": 2,
         "regex": "",
         "skipUrlSync": false,
@@ -739,10 +741,11 @@
         "useTags": false
       },
       {
-        "allValue": null,
+        "allValue": "null",
         "current": {
-          "text": "10.56.0.14",
-          "value": "10.56.0.14"
+          "selected": true,
+          "text": "10.4.0.16",
+          "value": "10.4.0.16"
         },
         "datasource": "prometheus",
         "definition": "",
@@ -753,7 +756,7 @@
         "multi": false,
         "name": "host",
         "options": [],
-        "query": "label_values(apache_up, instance)",
+        "query": "label_values(apache_up{environment=\"$environment\"}, instance)",
         "refresh": 2,
         "regex": "/([^:]+):.*/",
         "skipUrlSync": false,
@@ -765,8 +768,9 @@
         "useTags": false
       },
       {
-        "allValue": null,
+        "allValue": "null",
         "current": {
+          "selected": true,
           "text": "9117",
           "value": "9117"
         },
@@ -822,10 +826,10 @@
     ]
   },
   "timezone": "",
-  "title": "ApacheMetrics",
-  "uid": "6_KsLxBmkasdfq",
+  "title": "ApacheMetrics1",
+  "uid": "6_KsLxBmkasdfqdab",
   "variables": {
     "list": []
   },
-  "version": 5
+  "version": 4
 }
